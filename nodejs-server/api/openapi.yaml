@@ -1,0 +1,884 @@
+openapi: 3.0.0
+info:
+  title: Level 1 API
+  version: "2019"
+servers:
+- url: https://virtserver.swaggerhub.com/SeamlessPay/level1-api/2019
+  description: SwaggerHub API Auto Mocking
+paths:
+  /v1/charges:
+    get:
+      tags:
+      - Charges
+      summary: List Charges
+      operationId: v1ChargesGET
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                  - id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                    amount: "1.00"
+                    authCode: A11111
+                    adjustments:
+                    - id: ADJ_01BBEBNMZ7VYYMADN9MJ3RDAJM
+                      amount: "105.00"
+                      tip: "1.00"
+                      taxAmount: "5.00"
+                      surchargeFeeAmount: "1.00"
+                    avsMessage: "street match, zip decline"
+                    avsResult: "SM, ZD"
+                    cvvResult: M
+                    currency: USD
+                    cardBrand: Visa
+                    cardType: Credit
+                    expDate: string
+                    ipAddress: 99.99.99.99
+                    lastFour: "4242"
+                    method: charge
+                    order:
+                      shipToZip: 11111-1111
+                      shipFromZip: 99999-9999
+                      items:
+                      - discountAmount: "9.00"
+                        unitCost: "2.00"
+                        unitOfMeasure: CS
+                        lineNumber: "1"
+                        description: DESCRIPTION-1
+                        taxAmount: "109.00"
+                        quantity: "1000"
+                        upc: UPC-1
+                        lineTotal: "2000.00"
+                        taxExempt: true
+                        taxRate: "0.025"
+                    refunds:
+                    - id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                      amount: "1.00"
+                      authCode: A11111
+                      currency: USD
+                      cardBrand: Visa
+                      cardType: Credit
+                      metadata:
+                        customOption: example
+                      ipAddress: 99.99.99.99
+                      lastFour: "1000"
+                      method: refund
+                      status: REFUNDED
+                      statusCode: refunded
+                      statusDescription: Transaction refund success
+                      token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                      txnDate: 2022-01-06T04:59:20Z
+                      updatedAt: 2017-12-15T19:08:18.262Z
+                      createdAt: 2017-12-15T19:08:18.262Z
+                    status: AUTHORIZED
+                    statusCode: approved
+                    statusDescription: Transaction approved
+                    surchargeFeeAmount: "1.00"
+                    token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                    tip: string
+                    txnDate: 2022-01-06T04:59:20Z
+                    updatedAt: 2017-12-15T19:08:18.262Z
+                    createdAt: 2017-12-15T19:08:18.262Z
+                    customer:
+                      id: CUS_01CBVZHCFCYQD84QS5V2323HB6
+                      address: 400 Madison Ave
+                      address2: 10th Fl
+                      companyName: ABC Business
+                      city: New York
+                      country: USA
+                      email: hello@seamlesspay.com
+                      metadata:
+                        customOption: example
+                      name: Michael Smith
+                      phone: "2125555000"
+                      state: NY
+                      zip: "10010"
+                      website: https://example.com
+                      updatedAt: 2017-12-15T19:08:18.262Z
+                      createdAt: 2017-12-15T19:08:18.262Z
+                  pagination:
+                    count: 10
+                    page: 1
+                    pages: 2
+                    size: 19
+                  total: 0
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                    errors:
+                    - null
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Charges
+    post:
+      tags:
+      - Charges
+      summary: Create a Charge
+      operationId: v1ChargesPOST
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Charge-Request'
+            example:
+              amount: "105.00"
+              accountNumber: "4242424242424242"
+              capture: false
+              currency: USD
+              expDate: "0125"
+              txnType: CREDIT_CARD
+              idempotencyKey: 7c62e63ab7fb6d10166b70945dc48b52
+              pinEntryCapability: pin_incapable
+              posEntryMode: emv_contactless
+              emvData: 4F07A0000000031010500B564953412043524544495457134242424242424242D22092010790342500000F5A0842424242424242425F201A546573742F4361726420303120202020202020202020202020205F24032209305F25031809015F300202015F3401009F12104361706974616C4F6E652044656269749F39023035
+              order:
+                shipToZip: 11111-1111
+                shipFromZip: 99999-9999
+                items:
+                - discountAmount: "20.00"
+                  unitCost: "10.00"
+                  unitOfMeasure: CS
+                  lineNumber: "1"
+                  description: DESCRIPTION-1
+                  taxAmount: "5.00"
+                  quantity: "12"
+                  upc: UPC-1
+                  lineTotal: "105.00"
+                  taxExempt: false
+                  taxRate: "0.05"
+              customer:
+                address: 400 Madison Ave
+                address2: 10th Fl
+                companyName: ABC Business
+                city: New York
+                country: USA
+                email: hello@seamlesspay.com
+                metadata:
+                  customOption: example
+                name: Michael Smith
+                phone: "2125555000"
+                state: NY
+                zip: "10010"
+                website: https://example.com
+        required: true
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                  amount: "105.00"
+                  authCode: A11111
+                  avsMessage: "street match, zip decline"
+                  avsResult: "SM, ZD"
+                  currency: USD
+                  ipAddress: 99.99.99.99
+                  method: charge
+                  order:
+                    shipToZip: 11111-1111
+                    shipFromZip: 99999-9999
+                    items:
+                    - discountAmount: "20.00"
+                      unitCost: "10.00"
+                      unitOfMeasure: CS
+                      lineNumber: "1"
+                      description: DESCRIPTION-1
+                      taxAmount: "5.00"
+                      quantity: "12"
+                      upc: UPC-1
+                      lineTotal: "105.00"
+                      taxExempt: false
+                      taxRate: "0.05"
+                  surchargeFeeAmount: "1.00"
+                  token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                  tip: "1.00"
+                  statusDescription: Transaction capture success
+                  cardBrand: Visa
+                  lastFour: "1000"
+                  statusCode: captured
+                  status: CAPTURED
+                  batch: BCH_01D8JSWWW3YQ1N8FCSKZ6Z8GDR
+                  cvvResult: M
+                  cardType: Credit
+                  emvData: 8A023030910A7344A67B24F6578F30309F6E04000000019F7C20DEADBEEFDEADBEEF010203040506070809101112131415161718192021222324
+                  customer:
+                    id: CUS_01CBVZHCFCYQD84QS5V2323HB6
+                    address: 400 Madison Ave
+                    address2: 10th Fl
+                    companyName: ABC Business
+                    city: New York
+                    country: USA
+                    email: hello@seamlesspay.com
+                    metadata:
+                      customOption: example
+                    name: Michael Smith
+                    phone: "2125555000"
+                    state: NY
+                    zip: "10010"
+                    website: https://example.com
+                    updatedAt: 2017-12-15T19:08:18.262Z
+                    createdAt: 2017-12-15T19:08:18.262Z
+                  txnDate: 2020-02-24T19:43:12.730Z
+                  updatedAt: 2020-02-24T19:43:12.730Z
+                  createdAt: 2020-02-24T19:43:12.730Z
+                x-content-type: application/json
+        "209":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                  amount: "105.00"
+                  authCode: A11111
+                  avsMessage: "street match, zip decline"
+                  avsResult: "SM, ZD"
+                  currency: USD
+                  ipAddress: 99.99.99.99
+                  method: charge
+                  surchargeFeeAmount: "1.00"
+                  token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                  tip: "1.00"
+                  statusDescription: Partial amount approved
+                  cardBrand: Visa
+                  lastFour: "1000"
+                  statusCode: captured
+                  status: AUTHORIZED
+                  cvvResult: M
+                  cardType: Credit
+                  emvData: 8A023030910A7344A67B24F6578F30309F6E04000000019F7C20DEADBEEFDEADBEEF010203040506070809101112131415161718192021222324
+                  customer:
+                    address: 400 Madison Ave
+                    address2: 10th Fl
+                    companyName: ABC Business
+                    city: New York
+                    country: USA
+                    email: hello@seamlesspay.com
+                    metadata:
+                      customOption: example
+                    name: Michael Smith
+                    phone: "2125555000"
+                    state: NY
+                    zip: "10010"
+                    website: https://example.com
+                  txnDate: 2020-02-24T19:43:12.730Z
+                  updatedAt: 2020-02-24T19:43:12.730Z
+                  createdAt: 2020-02-24T19:43:12.730Z
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                  errors:
+                  - Sample error message
+                x-content-type: application/json
+        "402":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: PaymentError
+                  code: 402
+                  className: payment-error
+                  message: Sample error message
+                  data:
+                    statusCode: sample_code
+                    statusDescription: Sample description
+                  errors:
+                  - Sample error message
+                x-content-type: application/json
+        "422":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: Unprocessable
+                  code: 422
+                  className: unprocessable
+                  message: Validation Error
+                  data:
+                    statusCode: "110"
+                    statusDescription: Validation Error
+                  errors:
+                  - Sample error message
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Charges
+  /v1/charges/{transaction_id}:
+    get:
+      tags:
+      - Charges
+      summary: Retrieve a Charge
+      operationId: v1ChargesTransaction_idGET
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: transaction_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                  amount: "1.00"
+                  authCode: A11111
+                  adjustments:
+                  - id: ADJ_01BBEBNMZ7VYYMADN9MJ3RDAJM
+                    amount: "105.00"
+                    tip: "1.00"
+                    taxAmount: "5.00"
+                    surchargeFeeAmount: "1.00"
+                  avsMessage: "street match, zip decline"
+                  avsResult: "SM, ZD"
+                  cvvResult: M
+                  currency: USD
+                  cardBrand: Visa
+                  cardType: Credit
+                  expDate: string
+                  ipAddress: 9.9.9.9
+                  lastFour: "4242"
+                  method: charge
+                  order:
+                    shipToZip: 11111-1111
+                    shipFromZip: 99999-9999
+                    items:
+                    - discountAmount: "9.00"
+                      unitCost: "2.00"
+                      unitOfMeasure: CS
+                      lineNumber: "1"
+                      description: DESCRIPTION-1
+                      taxAmount: "109.00"
+                      quantity: "1000"
+                      upc: UPC-1
+                      lineTotal: "2000.00"
+                      taxExempt: true
+                      taxRate: "0.025"
+                  refunds:
+                  - id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                    amount: "1.00"
+                    authCode: A11111
+                    currency: USD
+                    cardBrand: Visa
+                    cardType: Credit
+                    metadata:
+                      customOption: example
+                    ipAddress: 9.9.9.9
+                    lastFour: "1000"
+                    method: refund
+                    status: REFUNDED
+                    statusCode: refunded
+                    statusDescription: Transaction refund success
+                    token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                    txnDate: 2022-01-06T04:59:20Z
+                    updatedAt: 2017-12-15T19:08:18.262Z
+                    createdAt: 2017-12-15T19:08:18.262Z
+                  status: AUTHORIZED
+                  statusCode: approved
+                  statusDescription: Transaction approved
+                  surchargeFeeAmount: "1.00"
+                  token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                  tip: string
+                  txnDate: 2022-01-06T04:59:20Z
+                  updatedAt: 2017-12-15T19:08:18.262Z
+                  createdAt: 2017-12-15T19:08:18.262Z
+                  customer:
+                    id: CUS_01CBVZHCFCYQD84QS5V2323HB6
+                    address: 400 Madison Ave
+                    address2: 10th Fl
+                    companyName: ABC Business
+                    city: New York
+                    country: USA
+                    email: hello@seamlesspay.com
+                    metadata:
+                      customOption: example
+                    name: Michael Smith
+                    phone: "2125555000"
+                    state: NY
+                    zip: "10010"
+                    website: https://example.com
+                    updatedAt: 2017-12-15T19:08:18.262Z
+                    createdAt: 2017-12-15T19:08:18.262Z
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                    errors:
+                    - null
+                x-content-type: application/json
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotFound
+                  message: Item not found.
+                  code: 404
+                  className: not-found
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Charges
+  /v1/refunds:
+    get:
+      tags:
+      - Refunds
+      summary: List Refunds
+      operationId: v1RefundsGET
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                  - id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                    amount: "1.00"
+                    authCode: A11111
+                    currency: USD
+                    cardBrand: Visa
+                    cardType: Credit
+                    ipAddress: 99.99.99.99
+                    lastFour: "1000"
+                    method: refund
+                    status: REFUNDED
+                    statusCode: refunded
+                    statusDescription: Transaction refund success
+                    token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                    txnDate: 2022-01-06T04:59:20Z
+                    updatedAt: 2017-12-15T19:08:18.262Z
+                    createdAt: 2017-12-15T19:08:18.262Z
+                  pagination:
+                    count: 10
+                    page: 1
+                    pages: 2
+                    size: 19
+                  total: 0
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                    errors:
+                    - null
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Refunds
+    post:
+      tags:
+      - Refunds
+      summary: Create a Refund
+      operationId: v1RefundsPOST
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refund-Request'
+            example:
+              amount: "105.00"
+              currency: USD
+              txnType: CREDIT_CARD
+              txnID: TR_01BBEBNMZ7VYYMADN8MJ4RDBBB
+              idempotencyKey: 7c62e63ab7fb6d10166b70945dc48b52
+              pinEntryCapability: pin_capable
+              posEntryMode: emv_contactless
+              emvData: 4F07A0000000031010500B564953412043524544495457134242424242424242D22092010790342500000F5A0842424242424242425F201A546573742F4361726420303120202020202020202020202020205F24032209305F25031809015F300202015F3401009F12104361706974616C4F6E652044656269749F39023035
+              customer:
+                address: 400 Madison Ave
+                address2: 10th Fl
+                companyName: ABC Business
+                city: New York
+                country: USA
+                email: hello@seamlesspay.com
+                metadata:
+                  customOption: example
+                name: Michael Smith
+                phone: "2125555000"
+                state: NY
+                zip: "10010"
+                website: https://example.com
+        required: true
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                  amount: "1.00"
+                  authCode: A11111
+                  currency: USD
+                  cardBrand: Visa
+                  cardType: Credit
+                  emvData: 8A023030910A7344A67B24F6578F30309F6E04000000019F7C20DEADBEEFDEADBEEF010203040506070809101112131415161718192021222324
+                  ipAddress: 99.99.99.99
+                  lastFour: "1000"
+                  method: refund
+                  status: REFUNDED
+                  statusCode: refunded
+                  statusDescription: Transaction refund success
+                  token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                  txnDate: 2022-03-10T05:33:53Z
+                  updatedAt: 2017-12-15T19:08:18.262Z
+                  createdAt: 2017-12-15T19:08:18.262Z
+                  customer:
+                    id: CUS_01CBVZHCFCYQD84QS5V2323HB6
+                    address: 400 Madison Ave
+                    address2: 10th Fl
+                    companyName: ABC Business
+                    city: New York
+                    country: USA
+                    email: hello@seamlesspay.com
+                    metadata: "{\"customOption\":\"example\"}"
+                    name: Michael Smith
+                    phone: "2125555000"
+                    state: NY
+                    zip: "10010"
+                    website: https://example.com
+                    updatedAt: 2017-12-15T19:08:18.262Z
+                    createdAt: 2017-12-15T19:08:18.262Z
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                    errors:
+                    - null
+                x-content-type: application/json
+        "422":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotFound
+                  message: Item not found.
+                  code: 404
+                  className: not-found
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Refunds
+  /v1/refunds/{transaction_id}:
+    get:
+      tags:
+      - Refunds
+      summary: Retrieve a Refund
+      operationId: v1RefundsTransaction_idGET
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: transaction_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                  amount: "1.00"
+                  authCode: A11111
+                  currency: USD
+                  cardBrand: Visa
+                  cardType: Credit
+                  ipAddress: 99.99.99.99
+                  lastFour: "1000"
+                  method: refund
+                  status: REFUNDED
+                  statusCode: refunded
+                  statusDescription: Transaction refund success
+                  token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                  txnDate: 2022-01-06T04:59:20Z
+                  updatedAt: 2017-12-15T19:08:18.262Z
+                  createdAt: 2017-12-15T19:08:18.262Z
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                    errors:
+                    - null
+                x-content-type: application/json
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotFound
+                  message: Item not found.
+                  code: 404
+                  className: not-found
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Refunds
+    put:
+      tags:
+      - Refunds
+      summary: Update a Refund
+      operationId: v1RefundsTransaction_idPUT
+      parameters:
+      - name: API-Version
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: transaction_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/refunds_transaction_id_body'
+            example:
+              metadata:
+                customOption: example
+              idempotencyKey: 7c62e63ab7fb6d10166b70945dc48b52
+        required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: TR_01BBEBNMZ7VYYMADN8MJ4RDBJX
+                  amount: "1.00"
+                  authCode: A11111
+                  currency: USD
+                  cardBrand: Visa
+                  cardType: Credit
+                  ipAddress: 99.99.99.99
+                  lastFour: "1000"
+                  method: refund
+                  status: REFUNDED
+                  statusCode: refunded
+                  statusDescription: Transaction refund success
+                  token: TKN_01BMFGDTK30EYH9FWTXPYR50
+                  txnDate: 2022-01-06T04:59:20Z
+                  updatedAt: 2017-12-15T19:08:18.262Z
+                  createdAt: 2017-12-15T19:08:18.262Z
+                x-content-type: application/json
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotAuthenticated
+                  code: 401
+                  className: not-authenticated
+                  data:
+                    statusCode: 401
+                    statusDescription: Authentication failed
+                    errors:
+                    - null
+                x-content-type: application/json
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: NotFound
+                  message: Item not found.
+                  code: 404
+                  className: not-found
+                x-content-type: application/json
+        "422":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: Unprocessable
+                  message: Validation error
+                  code: 422
+                  className: unprocessable
+                  data:
+                    statusCode: "110"
+                    statusDescription: Validation error
+                    errors:
+                    - error
+                x-content-type: application/json
+      security:
+      - BearerAuth: []
+      x-swagger-router-controller: Refunds
+components:
+  schemas:
+    Charge-Request:
+      type: object
+    Refund-Request:
+      type: object
+    refunds_transaction_id_body:
+      required:
+      - metadata
+      type: object
+      properties:
+        metadata:
+          type: string
+          example: Example
+        idempotencyKey:
+          type: string
+          example: Example
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  links: {}
+  callbacks: {}
